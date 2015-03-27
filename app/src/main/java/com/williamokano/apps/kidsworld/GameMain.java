@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.williamokano.apps.kidsworld.models.Image;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 enum SwipeDirection {
     Left,
@@ -33,18 +34,100 @@ public class GameMain extends Activity {
          * While no database is used, we define manually
          * the images to test and implement the "slide" functionality
          */
-        Image img1, img2;
-        img1 = new Image();
-        img2 = new Image();
 
-        img1.setImageAsset(R.drawable.dog);
-        img1.setDescription("DOG");
+        // Initialize animals
 
-        img2.setImageAsset(R.drawable.cat);
-        img2.setDescription("CAT");
+        Image imageDog, imageCat;
 
-        images.add(img1);
-        images.add(img2);
+        imageDog = new Image();
+        imageCat = new Image();
+
+        imageDog.setImageAsset(R.drawable.dog);
+        imageDog.setDescription("DOG");
+        images.add(imageDog);
+
+        imageCat.setImageAsset(R.drawable.cat);
+        imageCat.setDescription("CAT");
+        images.add(imageCat);
+
+
+        // Initialize colors
+
+        Image colorYellow, colorRed, colorBlue, colorBlack, colorGreen, colorOrange, colorPink, colorPurple, colorWhite;
+
+        colorBlack = new Image();
+        colorBlue = new Image();
+        colorGreen = new Image();
+        colorOrange = new Image();
+        colorPink = new Image();
+        colorPurple = new Image();
+        colorRed = new Image();
+        colorWhite = new Image();
+        colorYellow = new Image();
+
+        colorBlack.setImageAsset(R.drawable.black);
+        colorBlack.setDescription("BLACK");
+        images.add(colorBlack);
+
+        colorBlue.setImageAsset(R.drawable.blue);
+        colorBlue.setDescription("BLUE");
+        images.add(colorBlue);
+
+        colorGreen.setImageAsset(R.drawable.green);
+        colorGreen.setDescription("GREEN");
+        images.add(colorGreen);
+
+        colorOrange.setImageAsset(R.drawable.orange);
+        colorOrange.setDescription("ORANGE");
+        images.add(colorOrange);
+
+        colorPink.setImageAsset(R.drawable.pink);
+        colorPink.setDescription("PINK");
+        images.add(colorPink);
+
+        colorPurple.setImageAsset(R.drawable.purple);
+        colorPurple.setDescription("PURPLE");
+        images.add(colorPurple);
+
+        colorRed.setImageAsset(R.drawable.red);
+        colorRed.setDescription("RED");
+        images.add(colorRed);
+
+        colorWhite.setImageAsset(R.drawable.white);
+        colorWhite.setDescription("WHITE");
+        images.add(colorWhite);
+
+        colorYellow.setImageAsset(R.drawable.yellow);
+        colorYellow.setDescription("YELLOW");
+        images.add(colorYellow);
+
+        // Initialize shapes
+
+        Image shapeSquare, shapeRectangle, shapeCircle, shapeTriangle;
+
+        shapeCircle = new Image();
+        shapeRectangle = new Image();
+        shapeSquare = new Image();
+        shapeTriangle = new Image();
+
+        shapeCircle.setImageAsset(R.drawable.circle);
+        shapeCircle.setDescription("CIRCLE");
+        images.add(shapeCircle);
+
+        shapeRectangle.setImageAsset(R.drawable.rectangle);
+        shapeRectangle.setDescription("RECTANGLE");
+        images.add(shapeRectangle);
+
+        shapeSquare.setImageAsset(R.drawable.square);
+        shapeSquare.setDescription("SQUARE");
+        images.add(shapeSquare);
+
+        shapeTriangle.setImageAsset(R.drawable.triangle);
+        shapeTriangle.setDescription("TRIANGLE");
+        images.add(shapeTriangle);
+
+
+        Collections.shuffle(images);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_main);
