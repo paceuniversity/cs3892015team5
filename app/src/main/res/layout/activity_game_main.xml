@@ -16,13 +16,9 @@
         android:textColor="#ffffff"
         android:textSize="64dp"/>
 
-    <TextView
-        android:id="@+id/game_main_counter"
+    <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="64dp"
-        android:text="0 times!"
-        android:textColor="#FFFFFF"
-        android:gravity="center"/>
+        android:id="@+id/main_game_image"/>
 
 </LinearLayout>
