@@ -20,7 +20,7 @@ public class GameMain extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-
+            //RSA key test
         }
         return super.onTouchEvent(event);
     }
