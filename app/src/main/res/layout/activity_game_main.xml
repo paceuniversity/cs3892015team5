@@ -21,4 +21,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/main_game_image"/>
 
+
 </LinearLayout>
+
+

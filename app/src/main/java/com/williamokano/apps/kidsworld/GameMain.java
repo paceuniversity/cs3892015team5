@@ -1,11 +1,16 @@
 package com.williamokano.apps.kidsworld;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.williamokano.apps.kidsworld.models.Image;
 
@@ -24,8 +29,12 @@ public class GameMain extends Activity {
     public int actual = 0;
     SwipeDirection swipeDirection = null;
 
+    private GestureDetector gestureDetector;
+
     ArrayList<Image> images = new ArrayList<>();
     ImageView main_game_image;
+
+    TextView imageDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +138,7 @@ public class GameMain extends Activity {
 
         Collections.shuffle(images);
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_main);
 
@@ -138,6 +148,7 @@ public class GameMain extends Activity {
          */
         main_game_image = (ImageView)findViewById(R.id.main_game_image);
         updateImage();
+
     }
 
     /**
@@ -195,10 +206,16 @@ public class GameMain extends Activity {
                  */
                 if(Math.abs(deltaX) > MIN_DISTANCE) {
                     updateImage();
+                }else{
+
+                    Toast toast = Toast.makeText(getApplicationContext(), images.get(actual).getDescription(), Toast.LENGTH_SHORT);
+                    toast.show();
+
                 }
                 break;
         }
-        return super.onTouchEvent(event);
+        return false;
+        //return super.onTouchEvent(event);
     }
 
     /**
@@ -217,14 +234,15 @@ public class GameMain extends Activity {
          * triggering run-time errors on the application.
          */
         if(swipeDirection == SwipeDirection.Left) {
-            actual = (actual + size - 1) % size;
+            this.actual = (actual + size - 1) % size;
         }else if(swipeDirection == SwipeDirection.Right) {
-            actual = (actual + size + 1) % size;
+            this.actual = (actual + size + 1) % size;
         }
 
         /**
          * Just update programmatically the ImageView from the layout.
          */
-        main_game_image.setBackgroundResource(images.get(actual).getImageAsset());
+        main_game_image.setBackgroundResource(images.get(this.actual).getImageAsset());
     }
+
 }
