@@ -31,3 +31,6 @@ proguard/
 
 ### Android Patch ###
 gen-external-apklibs
+
+### ANDROID STUDIO ###
+.idea
