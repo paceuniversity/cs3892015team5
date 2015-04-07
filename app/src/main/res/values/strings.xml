@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KidsWorld</string>
+    <string name="app_name">Kids World</string>
 
     <string name="title_activity_splash_screen">Kids World</string>
     <string name="dummy_button">Dummy Button</string>

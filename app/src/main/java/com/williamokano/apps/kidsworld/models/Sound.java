@@ -5,7 +5,13 @@ package com.williamokano.apps.kidsworld.models;
  */
 public class Sound {
     private int SoundAsset;
-
+    public Sound ()
+    {
+    }
+    public Sound(int soundAsset)
+    {
+        SoundAsset = soundAsset;
+    }
     public int getSoundAsset() {
         return SoundAsset;
     }
