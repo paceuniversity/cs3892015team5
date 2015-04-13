@@ -12,7 +12,7 @@
     android:orientation="vertical">
 
     <include layout="@layout/background_basic"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_width="match_parent" />
 
     <Button
