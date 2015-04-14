@@ -3,6 +3,7 @@ package com.williamokano.apps.kidsworld;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -18,10 +19,12 @@ import android.widget.Toast;
 
 import com.williamokano.apps.kidsworld.models.Image;
 import com.williamokano.apps.kidsworld.models.Sound;
+import android.content.ContentValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import android.database.Cursor;
 
 enum SwipeDirection {
     Left,
@@ -34,6 +37,9 @@ public class GameMain extends Activity {
     static final int MIN_DISTANCE = 150;
     public int actual = 0;
     SwipeDirection swipeDirection = null;
+
+    private DBHelper dbHelper;
+    private SQLiteDatabase db;
 
     private GestureDetector gestureDetector;
 
@@ -49,134 +55,25 @@ public class GameMain extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        /**
-         * While no database is used, we define manually
-         * the images to test and implement the "slide" functionality
-         */
+        dbHelper = new DBHelper(this);
 
-        // Initialize animals
+        db = dbHelper.getReadableDatabase();
 
-        Image imageDog, imageCat;
+        String[] columns = {dbHelper.IMAGE, dbHelper.SOUND, dbHelper.OBJ_DESCRIPTION};
 
-        imageDog = new Image();
-        imageCat = new Image();
+        Cursor c = db.query(dbHelper.TABLE,columns, null, null, null, null, null );
 
-        Sound soundDog = new Sound(R.raw.dog);
-        Sound soundCat = new Sound(R.raw.cat);
+        c.moveToFirst();
 
-        imageDog.setImageAsset(R.drawable.dog);
-        imageDog.setDescription("DOG");
-        imageDog.setSoundAsset(soundDog);
-        images.add(imageDog);
+        while(!c.isAfterLast()){
 
-        imageCat.setImageAsset(R.drawable.cat);
-        imageCat.setDescription("CAT");
-        imageCat.setSoundAsset(soundCat);
-        images.add(imageCat);
+            images.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
+                    c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
+                    c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION))));
 
+            c.moveToNext();
 
-        // Initialize colors
-
-        Image colorYellow, colorRed, colorBlue, colorBlack, colorGreen, colorOrange, colorPink, colorPurple, colorWhite;
-
-        colorBlack = new Image();
-        colorBlue = new Image();
-        colorGreen = new Image();
-        colorOrange = new Image();
-        colorPink = new Image();
-        colorPurple = new Image();
-        colorRed = new Image();
-        colorWhite = new Image();
-        colorYellow = new Image();
-
-        Sound soundBlack = new Sound(R.raw.black);
-        Sound soundBlue = new Sound(R.raw.blue);
-        Sound soundGreen = new Sound(R.raw.green);
-        Sound soundOrange = new Sound(R.raw.orange);
-        Sound soundPink = new Sound(R.raw.pink);
-        Sound soundPurple = new Sound(R.raw.purple);
-        Sound soundRed = new Sound(R.raw.red);
-        Sound soundWhite = new Sound(R.raw.white);
-        Sound soundYellow = new Sound(R.raw.yellow);
-
-        colorBlack.setImageAsset(R.drawable.black);
-        colorBlack.setDescription("BLACK");
-        colorBlack.setSoundAsset(soundBlack);
-        images.add(colorBlack);
-
-        colorBlue.setImageAsset(R.drawable.blue);
-        colorBlue.setDescription("BLUE");
-        colorBlue.setSoundAsset(soundBlue);
-        images.add(colorBlue);
-
-        colorGreen.setImageAsset(R.drawable.green);
-        colorGreen.setDescription("GREEN");
-        colorGreen.setSoundAsset(soundGreen);
-        images.add(colorGreen);
-
-        colorOrange.setImageAsset(R.drawable.orange);
-        colorOrange.setDescription("ORANGE");
-        colorOrange.setSoundAsset(soundOrange);
-        images.add(colorOrange);
-
-        colorPink.setImageAsset(R.drawable.pink);
-        colorPink.setDescription("PINK");
-        colorPink.setSoundAsset(soundPink);
-        images.add(colorPink);
-
-        colorPurple.setImageAsset(R.drawable.purple);
-        colorPurple.setDescription("PURPLE");
-        colorPurple.setSoundAsset(soundPurple);
-        images.add(colorPurple);
-
-        colorRed.setImageAsset(R.drawable.red);
-        colorRed.setDescription("RED");
-        colorRed.setSoundAsset(soundRed);
-        images.add(colorRed);
-
-        colorWhite.setImageAsset(R.drawable.white);
-        colorWhite.setDescription("WHITE");
-        colorWhite.setSoundAsset(soundWhite);
-        images.add(colorWhite);
-
-        colorYellow.setImageAsset(R.drawable.yellow);
-        colorYellow.setDescription("YELLOW");
-        colorYellow.setSoundAsset(soundYellow);
-        images.add(colorYellow);
-
-        // Initialize shapes
-
-        Image shapeSquare, shapeRectangle, shapeCircle, shapeTriangle;
-        Sound soundCircle = new Sound(R.raw.circle);
-        Sound soundRectangle = new Sound(R.raw.rectangle);
-        Sound soundSquare = new Sound(R.raw.square);
-        Sound soundTriangle = new Sound(R.raw.triangle);
-
-        shapeCircle = new Image();
-        shapeRectangle = new Image();
-        shapeSquare = new Image();
-        shapeTriangle = new Image();
-
-        shapeCircle.setImageAsset(R.drawable.circle);
-        shapeCircle.setDescription("CIRCLE");
-        shapeCircle.setSoundAsset(soundCircle);
-        images.add(shapeCircle);
-
-        shapeRectangle.setImageAsset(R.drawable.rectangle);
-        shapeRectangle.setDescription("RECTANGLE");
-        shapeRectangle.setSoundAsset(soundRectangle);
-        images.add(shapeRectangle);
-
-        shapeSquare.setImageAsset(R.drawable.square);
-        shapeSquare.setDescription("SQUARE");
-        shapeSquare.setSoundAsset(soundSquare);
-        images.add(shapeSquare);
-
-        shapeTriangle.setImageAsset(R.drawable.triangle);
-        shapeTriangle.setDescription("TRIANGLE");
-        shapeTriangle.setSoundAsset(soundTriangle);
-        images.add(shapeTriangle);
-
+        }
 
         Collections.shuffle(images);
 
@@ -224,7 +121,7 @@ public class GameMain extends Activity {
             case MotionEvent.ACTION_UP:
 
                 /**
-                 * We save the last position fro mthe screen when
+                 * We save the last position fro the screen when
                  * the screen was untouched.
                  */
                 x2 = event.getX();
@@ -246,7 +143,7 @@ public class GameMain extends Activity {
                  * Only triggers when the delta distance (the distance travelled
                  * from the user finger on the touch action). If it absolute value
                  * is bigger than the necessary distance to trigger, we call the
-                 * updateImage function to update the imagem.
+                 * updateImage function to update the image.
                  */
                 if (Math.abs(deltaX) > MIN_DISTANCE) {
                     updateImage();

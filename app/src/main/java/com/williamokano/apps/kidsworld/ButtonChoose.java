@@ -15,11 +15,13 @@ public class ButtonChoose extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_button);
+
         Button button1 = (Button)findViewById(R.id.button_1);
+
         button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ButtonChoose.this,CategoryList.class);
+                Intent intent = new Intent(ButtonChoose.this,GameMain.class);
                 startActivity(intent);
             }
         });

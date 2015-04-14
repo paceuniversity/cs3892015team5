@@ -8,6 +8,16 @@ public class Image {
     private Sound sound;
     private String description;
 
+    public Image(int imageAsset, int sound, String description){
+
+        this.imageAsset = imageAsset;
+        this.sound = new Sound(sound);
+        this.description = description;
+
+    }
+
+    public Image(){};
+
     public int getImageAsset() {
         return imageAsset;
     }
