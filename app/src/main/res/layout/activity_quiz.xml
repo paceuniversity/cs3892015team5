@@ -48,7 +48,16 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_margin="5dp"
+                android:gravity="center"
                 android:background="@android:color/white">
+
+                <ImageView
+                    android:id="@+id/quiz_body_img1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/dog"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -58,7 +67,16 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_margin="5dp"
+                android:gravity="center"
                 android:background="@android:color/white">
+
+                <ImageView
+                    android:id="@+id/quiz_body_img2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/cat"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -77,7 +95,16 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_margin="5dp"
+                android:gravity="center"
                 android:background="@android:color/white">
+
+                <ImageView
+                    android:id="@+id/quiz_body_img3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/circle"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -87,7 +114,16 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_margin="5dp"
+                android:gravity="center"
                 android:background="@android:color/white">
+
+                <ImageView
+                    android:id="@+id/quiz_body_img4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/triangle"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
