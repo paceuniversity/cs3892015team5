@@ -16,28 +16,19 @@
         android:layout_width="match_parent" />
 
     <Button
-        android:id="@+id/button_1"
+        android:id="@+id/train"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Play Games"
+        android:text="TRAIN"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
         />
 
     <Button
-        android:id="@+id/button_2"
+        android:id="@+id/quiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show Statistics"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        />
-
-    <Button
-        android:id="@+id/button_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change Profile"
+        android:text="QUIZ"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         />

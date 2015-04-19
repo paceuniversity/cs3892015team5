@@ -16,21 +16,31 @@ public class ButtonChoose extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_button);
 
-        Button button1 = (Button) findViewById(R.id.button_1);
-        Button button_2 = (Button) findViewById(R.id.button_2);
+        Button button1 = (Button)findViewById(R.id.button_1);
+        Button button2 = (Button)findViewById(R.id.button_2);
+        Button button3 = (Button)findViewById(R.id.button_3);
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ButtonChoose.this, GameMain.class);
+                Intent intent = new Intent(ButtonChoose.this,CategoryList.class);
                 startActivity(intent);
             }
         });
 
-        button_2.setOnClickListener(new View.OnClickListener() {
+        button2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ButtonChoose.this, QuizActivity.class));
+                Intent intent = new Intent(ButtonChoose.this,GameMain.class);
+                startActivity(intent);
+            }
+        });
+
+        button3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ButtonChoose.this,GameMain.class);
+                startActivity(intent);
             }
         });
     }

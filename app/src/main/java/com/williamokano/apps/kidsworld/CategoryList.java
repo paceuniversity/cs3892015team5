@@ -35,20 +35,26 @@ public class CategoryList extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ListView lv = (ListView)parent;
                 HashMap<String,Object> map = (HashMap<String,Object>)lv.getItemAtPosition(position);
-                if(map.get("title")=="Shape"){
-                    Intent MainGameIntent = new Intent(CategoryList.this, GameMain.class);
+                if (map.get("title")=="Shape") {
+                    Intent MainGameIntent = new Intent(CategoryList.this, SelectedItems.class);
                     startActivity(MainGameIntent);
+                }else if(map.get("title")=="Color") {
+                    Intent MainGameIntent1 = new Intent(CategoryList.this, SelectedItems.class);
+                    startActivity(MainGameIntent1);
+                }else if(map.get("title")=="Animal"){
+                    Intent MainGameIntent2 = new Intent(CategoryList.this, SelectedItems.class);
+                    startActivity(MainGameIntent2);
                 }
             }});
-     }
+    }
 
     private List<Map<String,Object>> getData(){
-       List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 
-       Map<String,Object> map = new HashMap<String,Object>();
-       map.put("title","Shape");
-       map.put("img",R.drawable.triangle);
-       list.add(map);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("title","Shape");
+        map.put("img",R.drawable.triangle);
+        list.add(map);
 
         map = new HashMap<String,Object>();
         map.put("title","Color");

@@ -11,7 +11,7 @@
             android:name=".SplashScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_splash_screen"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.williamokano.apps.kidsworld.SplashScreen" />
@@ -22,21 +22,26 @@
         <activity
             android:name=".GameMain"
             android:label="@string/title_activity_game_main"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
         <activity
-            android:name=".ButtonChoose"
+            android:name="ButtonChoose"
             android:label="@string/title_activity_button_choose"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
         <activity
-            android:name=".CategoryList"
+            android:name="CategoryList"
             android:label="@string/title_activity_category_list"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        </activity>
+        <activity
+            android:name="SelectedItems"
+            android:label="@string/title_activity_selected_items"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
         <activity
             android:name=".QuizActivity"
-            android:label="@string/title_activity_quiz"
+            android:label="@string/title_activity_quiz_activity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
     </application>
