@@ -7,12 +7,14 @@ public class Image {
     private int imageAsset;
     private Sound sound;
     private String description;
+    private String category;
 
-    public Image(int imageAsset, int sound, String description){
+    public Image(int imageAsset, int sound, String description, String category){
 
         this.imageAsset = imageAsset;
         this.sound = new Sound(sound);
         this.description = description;
+        this.category = category;
 
     }
 
@@ -40,5 +42,13 @@ public class Image {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

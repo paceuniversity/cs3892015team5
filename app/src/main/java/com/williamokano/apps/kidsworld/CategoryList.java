@@ -37,12 +37,15 @@ public class CategoryList extends Activity {
                 HashMap<String,Object> map = (HashMap<String,Object>)lv.getItemAtPosition(position);
                 if (map.get("title")=="Shape") {
                     Intent MainGameIntent = new Intent(CategoryList.this, SelectedItems.class);
+                    MainGameIntent.putExtra("Key",1);
                     startActivity(MainGameIntent);
                 }else if(map.get("title")=="Color") {
                     Intent MainGameIntent1 = new Intent(CategoryList.this, SelectedItems.class);
+                    MainGameIntent1.putExtra("Key",2);
                     startActivity(MainGameIntent1);
                 }else if(map.get("title")=="Animal"){
                     Intent MainGameIntent2 = new Intent(CategoryList.this, SelectedItems.class);
+                    MainGameIntent2.putExtra("Key",3);
                     startActivity(MainGameIntent2);
                 }
             }});

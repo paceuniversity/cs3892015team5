@@ -3,6 +3,7 @@ package com.williamokano.apps.kidsworld;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -44,10 +45,13 @@ public class GameMain extends Activity {
     private GestureDetector gestureDetector;
 
     ArrayList<Image> images = new ArrayList<>();
+    ArrayList<Image> shapeimages = new ArrayList<>();
+    ArrayList<Image> colorimages = new ArrayList<>();
+    ArrayList<Image> animalimages = new ArrayList<>();
+
     ImageView main_game_image;
 
-    TextView imageDescription;
-
+//    TextView imageDescription;
     private SoundPool soundPool;
     private HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
     private int currStreamId;
@@ -59,25 +63,45 @@ public class GameMain extends Activity {
 
         db = dbHelper.getReadableDatabase();
 
-        String[] columns = {dbHelper.IMAGE, dbHelper.SOUND, dbHelper.OBJ_DESCRIPTION};
+        String[] columns = {dbHelper.IMAGE, dbHelper.SOUND, dbHelper.OBJ_DESCRIPTION,dbHelper.CATEGORY};
 
         Cursor c = db.query(dbHelper.TABLE,columns, null, null, null, null, null );
 
         c.moveToFirst();
 
+        Intent i = getIntent();
+        int v = i.getIntExtra("Key",0);
+
         while(!c.isAfterLast()){
-
-            images.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
-                    c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
-                    c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION))));
-
+            if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Shapes")) {
+                shapeimages.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
+                        c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
+                        c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION)), c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY))));
+            }else if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Colors")){
+                colorimages.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
+                        c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
+                        c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION)), c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY))));
+            }else if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Animals")){
+                animalimages.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
+                        c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
+                        c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION)), c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY))));
+            }
             c.moveToNext();
+        }
 
+        switch(v){
+            case 1:
+                images = shapeimages;
+                break;
+            case 2:
+                images = colorimages;
+                break;
+            case 3:
+                images = animalimages;
+                break;
         }
 
         Collections.shuffle(images);
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_main);
 
