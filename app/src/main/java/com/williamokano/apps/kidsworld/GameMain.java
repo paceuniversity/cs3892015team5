@@ -13,6 +13,7 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -113,6 +114,25 @@ public class GameMain extends Activity {
         updateImage();
 
         initSoundPool();
+
+        Button button1 = (Button)findViewById(R.id.Quizs);
+        Button button2 = (Button)findViewById(R.id.Items);
+
+        button1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameMain.this,QuizActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameMain.this,CategoryList.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
