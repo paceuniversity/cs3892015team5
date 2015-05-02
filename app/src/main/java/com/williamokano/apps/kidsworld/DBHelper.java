@@ -219,6 +219,46 @@ public class DBHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
+        values.put(this.IMAGE, R.drawable.bird);
+        values.put(this.OBJ_DESCRIPTION, "BIRD");
+        values.put(this.SOUND, R.raw.bird);
+        values.put(this.CATEGORY, "Animals");
+
+        db.insertOrThrow(this.TABLE, null, values);
+        values.clear();
+
+        values.put(this.IMAGE, R.drawable.frog);
+        values.put(this.OBJ_DESCRIPTION, "FROG");
+        values.put(this.SOUND, R.raw.frog);
+        values.put(this.CATEGORY, "Animals");
+
+        db.insertOrThrow(this.TABLE, null, values);
+        values.clear();
+
+        values.put(this.IMAGE, R.drawable.horse);
+        values.put(this.OBJ_DESCRIPTION, "HORSE");
+        values.put(this.SOUND, R.raw.horse);
+        values.put(this.CATEGORY, "Animals");
+
+        db.insertOrThrow(this.TABLE, null, values);
+        values.clear();
+
+        values.put(this.IMAGE, R.drawable.rabbit);
+        values.put(this.OBJ_DESCRIPTION, "rabbit");
+        values.put(this.SOUND, R.raw.rabbit);
+        values.put(this.CATEGORY, "Animals");
+
+        db.insertOrThrow(this.TABLE, null, values);
+        values.clear();
+
+        values.put(this.IMAGE, R.drawable.turtle);
+        values.put(this.OBJ_DESCRIPTION, "Turtle");
+        values.put(this.SOUND, R.raw.rabbit);
+        values.put(this.CATEGORY, "Animals");
+
+        db.insertOrThrow(this.TABLE, null, values);
+        values.clear();
+
         values.put(this.IMAGE, R.drawable.dog);
         values.put(this.OBJ_DESCRIPTION, "DOG");
         values.put(this.SOUND, R.raw.dog);
