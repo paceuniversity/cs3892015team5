@@ -6,6 +6,7 @@ import android.database.Cursor;
 import com.williamokano.apps.kidsworld.DBHelper;
 import com.williamokano.apps.kidsworld.models.Category;
 import com.williamokano.apps.kidsworld.models.Image;
+import com.williamokano.apps.kidsworld.models.Sound;
 import com.williamokano.apps.kidsworld.models.Thing;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ThingBLL {
 
         dbHelper.openDataBase();
 
-        String[] columns = {dbHelper.getImage(), dbHelper.getSound(), dbHelper.getObjDescription(),dbHelper.getCategory()};
+        String[] columns = {dbHelper.getId(), dbHelper.getImage(), dbHelper.getSound(), dbHelper.getObjDescription(),dbHelper.getCategory()};
 
         Cursor c = dbHelper.getMyDataBase().query(dbHelper.getTable(), columns, null, null, null, null, null);
 
@@ -37,15 +38,64 @@ public class ThingBLL {
 
         while(!c.isAfterLast()){
 
-            things.add(new Thing());
+            int idThing = c.getInt(c.getColumnIndexOrThrow(dbHelper.getId()));
+            int idCategory = c.getInt(c.getColumnIndexOrThrow(dbHelper.getCategory()));
+            Category category = new Category(idCategory, whichCategory(idCategory));
 
+            int idImage = dbHelper.getContext().getResources().getIdentifier(c.getString(c.getColumnIndexOrThrow(dbHelper.getImage())),
+                    "drawable", dbHelper.getContext().getPackageName());
+
+            int idSound = dbHelper.getContext().getResources().getIdentifier(c.getString(c.getColumnIndexOrThrow(dbHelper.getSound())),
+                    "raw", dbHelper.getContext().getPackageName());
+
+            String description = c.getString(c.getColumnIndexOrThrow(dbHelper.getObjDescription()));
+
+            Sound sound = new Sound(idSound);
+            Image img = new Image(idImage, idSound, description,
+                    whichCategory(c.getInt(c.getColumnIndexOrThrow(dbHelper.getCategory()))));
+
+
+            things.add(new Thing(idThing, idCategory, category, img, sound, description ));
+
+            c.moveToNext();
+        }
+
+        return things;
+    }
+
+    private String whichCategory(int id) {
+
+        switch (id){
+            case 1:
+                return "animals";
+
+            case 2:
+                return "shapes";
+
+            case 3:
+                return "colors";
+
+            default:
+                return "";
 
         }
-        return null;
+
+
     }
 
     //@TODO: Implement this method. Retrieve from database
-    public ArrayList<Thing> GetThins(Category category) {
-        return null;
+    public ArrayList<Thing> GetThings(DBHelper dbHelper, Category category) {
+
+        ArrayList<Thing> things = GetThings(dbHelper);
+        ArrayList<Thing> categorizedThings = new ArrayList<>();
+
+        for(Thing i: things){
+
+            if(i.getCategory().getName().equals(category.getName()))
+                categorizedThings.add(i);
+        }
+
+        return categorizedThings;
+
     }
 }

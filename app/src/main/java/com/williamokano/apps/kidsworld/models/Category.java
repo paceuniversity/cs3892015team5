@@ -7,6 +7,11 @@ public class Category {
     private Integer IdCategoria;
     private String Name;
 
+    public Category(Integer idCategoria, String name) {
+        IdCategoria = idCategoria;
+        Name = name;
+    }
+
     public Integer getIdCategoria() {
         return IdCategoria;
     }

@@ -19,8 +19,12 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.williamokano.apps.kidsworld.bll.ThingBLL;
+import com.williamokano.apps.kidsworld.models.Category;
 import com.williamokano.apps.kidsworld.models.Image;
 import com.williamokano.apps.kidsworld.models.Sound;
+import com.williamokano.apps.kidsworld.models.Thing;
+
 import android.content.ContentValues;
 
 import java.util.ArrayList;
@@ -42,17 +46,18 @@ public class GameMain extends Activity {
 
     private DBHelper dbHelper;
     private SQLiteDatabase db;
+    ThingBLL thingHelper;
 
     private GestureDetector gestureDetector;
 
-    ArrayList<Image> images = new ArrayList<>();
+    ArrayList<Thing> images = new ArrayList<>();
     ArrayList<Image> shapeimages = new ArrayList<>();
     ArrayList<Image> colorimages = new ArrayList<>();
     ArrayList<Image> animalimages = new ArrayList<>();
 
     ImageView main_game_image;
 
-//    TextView imageDescription;
+    //    TextView imageDescription;
     private SoundPool soundPool;
     private HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
     private int currStreamId;
@@ -61,46 +66,13 @@ public class GameMain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         dbHelper = new DBHelper(this);
+        thingHelper = new ThingBLL();
 
-        db = dbHelper.getReadableDatabase();
+        int category_id = getIntent().getExtras().getInt("Key");
 
-        String[] columns = {dbHelper.IMAGE, dbHelper.SOUND, dbHelper.OBJ_DESCRIPTION,dbHelper.CATEGORY};
+        Category cat = new Category(category_id, whichCategory(category_id));
 
-        Cursor c = db.query(dbHelper.TABLE,columns, null, null, null, null, null );
-
-        c.moveToFirst();
-
-        Intent i = getIntent();
-        int v = i.getIntExtra("Key",0);
-
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Shapes")) {
-                shapeimages.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
-                        c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
-                        c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION)), c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY))));
-            }else if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Colors")){
-                colorimages.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
-                        c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
-                        c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION)), c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY))));
-            }else if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Animals")){
-                animalimages.add(new Image(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)),
-                        c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND)),
-                        c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION)), c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY))));
-            }
-            c.moveToNext();
-        }
-
-        switch(v){
-            case 1:
-                images = shapeimages;
-                break;
-            case 2:
-                images = colorimages;
-                break;
-            case 3:
-                images = animalimages;
-                break;
-        }
+        images = thingHelper.GetThings(dbHelper, cat);
 
         Collections.shuffle(images);
         super.onCreate(savedInstanceState);
@@ -226,7 +198,7 @@ public class GameMain extends Activity {
         /**
          * Just update programmatically the ImageView from the layout.
          */
-        main_game_image.setBackgroundResource(images.get(this.actual).getImageAsset());
+        main_game_image.setBackgroundResource(images.get(this.actual).getImage().getImageAsset());
     }
 
     @TargetApi(21)
@@ -240,7 +212,7 @@ public class GameMain extends Activity {
         }
         for (int i = 0; i< images.size(); i++ )
         {
-            hashMap.put(i+1, soundPool.load(getApplicationContext(),images.get(i).getSoundAsset().getSoundAsset(), 1));
+            hashMap.put(i+1, soundPool.load(getApplicationContext(),images.get(i).getSound().getSoundAsset(), 1));
         }
     }
 
@@ -251,5 +223,24 @@ public class GameMain extends Activity {
         float volume = currVolume / maxVolume;
         currStreamId = soundPool.play(hashMap.get(sound), volume, volume, 1, loop, 1.0f);
         System.out.println(currStreamId);
+    }
+
+    private String whichCategory(int id){
+
+        switch (id){
+            case 1:
+                return "animals";
+
+            case 2:
+                return "shapes";
+
+            case 3:
+                return "colors";
+
+            default:
+                return "";
+
+        }
+
     }
 }
