@@ -65,6 +65,7 @@ public class GameMain extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         dbHelper = new DBHelper(this);
         thingHelper = new ThingBLL();
 
@@ -229,13 +230,13 @@ public class GameMain extends Activity {
 
         switch (id){
             case 1:
-                return "animals";
-
-            case 2:
                 return "shapes";
 
-            case 3:
+            case 2:
                 return "colors";
+
+            case 3:
+                return "animals";
 
             default:
                 return "";

@@ -17,8 +17,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.williamokano.apps.kidsworld.bll.ThingBLL;
+import com.williamokano.apps.kidsworld.models.Category;
 import com.williamokano.apps.kidsworld.models.Image;
 import com.williamokano.apps.kidsworld.models.Sound;
+import com.williamokano.apps.kidsworld.models.Thing;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ public class QuizActivity extends Activity {
     ImageView quiz_body_img3 = null;
     ImageView quiz_body_img4 = null;
 
-    ArrayList<Image> images = new ArrayList<>();
+    ArrayList<Thing> images = new ArrayList<>();
     ArrayList<Image> shapeimages = new ArrayList<>();
     ArrayList<Image> colorimages = new ArrayList<>();
     ArrayList<Image> animalimages = new ArrayList<>();
@@ -97,15 +100,23 @@ public class QuizActivity extends Activity {
         });
 
         Intent selfIntent = getIntent();
+        int v = selfIntent.getIntExtra("Key", 0);
 
-        dbHelper = new DBHelper(this);
+        DBHelper dbHelper = new DBHelper(this);
+        ThingBLL thingHelper = new ThingBLL();
+
+        Category cat = new Category(v, whichCategory(v));
+
+        images = thingHelper.GetThings(dbHelper, cat);
+
+        /*dbHelper = new DBHelper(this);
         db = dbHelper.getReadableDatabase();
         String[] columns = {dbHelper.IMAGE, dbHelper.SOUND, dbHelper.OBJ_DESCRIPTION,dbHelper.CATEGORY};
         Cursor c = db.query(dbHelper.TABLE,columns, null, null, null, null, null );
 
-        int v = selfIntent.getIntExtra("Key", 0);
 
         c.moveToFirst();
+
         while(!c.isAfterLast()){
             Image img = new Image();
             img.setImageAsset(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)));
@@ -121,9 +132,9 @@ public class QuizActivity extends Activity {
                 animalimages.add(img);
             }
             c.moveToNext();
-        }
+        }*/
 
-        switch(v){
+        /*switch(v){
             case 1:
                 images = shapeimages;
                 break;
@@ -133,7 +144,7 @@ public class QuizActivity extends Activity {
             case 3:
                 images = animalimages;
                 break;
-        }
+        }*/
 
         Collections.shuffle(images);
 
@@ -161,17 +172,17 @@ public class QuizActivity extends Activity {
         quiz_top_text.setText(images.get(actual).getDescription());
         play(actual + 1, 0);
 
-        Image actualImage = images.get(actual);
-        ArrayList<Image> RandomList = new ArrayList<>(images);
+        Image actualImage = images.get(actual).getImage();
+        ArrayList<Thing> RandomList = new ArrayList<>(images);
         RandomList.remove(actual);
 
         Collections.shuffle(RandomList);
 
         ArrayList<Image> ScreenItems = new ArrayList<>();
         ScreenItems.add(actualImage);
-        ScreenItems.add(RandomList.get(0));
-        ScreenItems.add(RandomList.get(1));
-        ScreenItems.add(RandomList.get(2));
+        ScreenItems.add(RandomList.get(0).getImage());
+        ScreenItems.add(RandomList.get(1).getImage());
+        ScreenItems.add(RandomList.get(2).getImage());
 
         Collections.shuffle(ScreenItems);
 
@@ -194,7 +205,7 @@ public class QuizActivity extends Activity {
         }
         for (int i = 0; i< images.size(); i++ )
         {
-            hashMap.put(i+1, soundPool.load(getApplicationContext(),images.get(i).getSoundAsset().getSoundAsset(), 1));
+            hashMap.put(i+1, soundPool.load(getApplicationContext(),images.get(i).getImage().getSoundAsset().getSoundAsset(), 1));
         }
     }
 
@@ -211,6 +222,25 @@ public class QuizActivity extends Activity {
         MediaPlayer mp = MediaPlayer.create(this, R.raw.try_again);
         mp.setLooping(false);
         mp.start();
+    }
+
+    private String whichCategory(int id){
+
+        switch (id){
+            case 1:
+                return "shapes";
+
+            case 2:
+                return "colors";
+
+            case 3:
+                return "animals";
+
+            default:
+                return "";
+
+        }
+
     }
 
 }

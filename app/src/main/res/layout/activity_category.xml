@@ -4,19 +4,37 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#0099cc"
+    android:clickable="false"
     android:orientation="vertical">
 
-    <include layout="@layout/background_basic"
-        android:layout_height="450dp"
-        android:layout_width="match_parent" />
+    <include
+        layout="@layout/background_basic"
+        android:layout_width="match_parent"
+        android:layout_height="410dp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:spinnerMode="dialog"
+        android:nestedScrollingEnabled="false"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go!"
+        android:id="@+id/goButton"
+        android:layout_gravity="center_horizontal" />
 
     <ListView
-        android:id="@+id/listview"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginTop = "0dp"
-        android:layout_marginLeft = "40dp"
-        android:layout_marginRight="40dp" >
-    </ListView>
+            android:id="@+id/listview"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="0dp"></ListView>
+
 
 </LinearLayout>
