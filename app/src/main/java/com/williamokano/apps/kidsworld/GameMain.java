@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.williamokano.apps.kidsworld.bll.CategoryBLL;
 import com.williamokano.apps.kidsworld.bll.ThingBLL;
 import com.williamokano.apps.kidsworld.models.Category;
 import com.williamokano.apps.kidsworld.models.Image;
@@ -54,6 +55,7 @@ public class GameMain extends Activity {
     ArrayList<Image> shapeimages = new ArrayList<>();
     ArrayList<Image> colorimages = new ArrayList<>();
     ArrayList<Image> animalimages = new ArrayList<>();
+    Category cat = null;
 
     ImageView main_game_image;
 
@@ -71,13 +73,7 @@ public class GameMain extends Activity {
 
         int category_id = getIntent().getExtras().getInt("Key");
 
-        Category cat = new Category(category_id, whichCategory(category_id));
-
-        images = thingHelper.GetThings(dbHelper, cat);
-
-        Collections.shuffle(images);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_main);
+        cat = CategoryBLL.GetCategory(dbHelper, category_id);
 
         /**
          * Find the instance of the imageview and set the first
@@ -95,6 +91,7 @@ public class GameMain extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GameMain.this,QuizActivity.class);
+                intent.putExtra("Key", cat.getIdCategoria());
                 startActivity(intent);
             }
         });

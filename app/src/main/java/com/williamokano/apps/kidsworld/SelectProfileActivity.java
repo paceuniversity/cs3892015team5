@@ -76,7 +76,9 @@ public class SelectProfileActivity extends Activity {
             finish(); //Finish to avoid go back here just by the back button.
         }else {
             PlayerBLL.ActualPlayer = players.get(0);
-            ArrayAdapter<Player> dataAdapter = new ArrayAdapter<Player>(this,
+
+            profile_spinner.setPrompt("Profiles");
+            ArrayAdapter dataAdapter = new ArrayAdapter(this,
                     android.R.layout.simple_spinner_item, players);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             profile_spinner.setAdapter(dataAdapter);
