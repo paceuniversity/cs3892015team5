@@ -52,6 +52,10 @@
             android:name=".ProfileCreateActivity"
             android:label="@string/title_activity_profile_create" >
         </activity>
+        <activity
+            android:name=".StatisticsMainActivity"
+            android:label="@string/title_activity_statistics_main" >
+        </activity>
     </application>
 
 </manifest>

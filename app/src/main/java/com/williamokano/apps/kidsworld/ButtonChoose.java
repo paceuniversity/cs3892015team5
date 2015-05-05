@@ -31,7 +31,7 @@ public class ButtonChoose extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ButtonChoose.this, GameMain.class);
+                Intent intent = new Intent(ButtonChoose.this, StatisticsMainActivity.class);
                 startActivity(intent);
             }
         });
