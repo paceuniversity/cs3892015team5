@@ -81,6 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
+        //myDataBase = this.getWritableDatabase();
         this.context = context;
 
     }
@@ -177,7 +178,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Open the database
         String myPath = DB_PATH + DB_NAME;
-        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 
     }
 

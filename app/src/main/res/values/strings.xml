@@ -12,4 +12,6 @@
     <string name="title_activity_category_list">CategoryList</string>
     <string name="title_activity_quiz_activity">QuizActivity</string>
     <string name="title_activity_selected_items" />
+    <string name="title_activity_select_profile">SelectProfileActivity</string>
+    <string name="title_activity_profile_create">ProfileCreateActivity</string>
 </resources>

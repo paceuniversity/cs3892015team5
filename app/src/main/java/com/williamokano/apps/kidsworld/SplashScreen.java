@@ -33,7 +33,7 @@ public class SplashScreen extends Activity {
                 /**
                  * Create the intent and start the activity
                  */
-                Intent MainGameIntent = new Intent(SplashScreen.this, ButtonChoose.class);
+                Intent MainGameIntent = new Intent(SplashScreen.this, SelectProfileActivity.class);
                 startActivity(MainGameIntent);
 
                 /**

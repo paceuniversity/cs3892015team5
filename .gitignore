@@ -34,3 +34,4 @@ gen-external-apklibs
 
 ### ANDROID STUDIO ###
 .idea
+.idea/workspace.xml

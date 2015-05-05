@@ -7,6 +7,13 @@ public class Player {
     private Integer IdPlayer;
     private String Name;
 
+    public Player() { }
+
+    public Player(Integer _id, String name) {
+        this.IdPlayer = _id;
+        this.Name = name;
+    }
+
     public Integer getIdPlayer() {
         return IdPlayer;
     }
@@ -21,5 +28,10 @@ public class Player {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.Name;
     }
 }
