@@ -17,10 +17,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.williamokano.apps.kidsworld.bll.CategoryBLL;
+import com.williamokano.apps.kidsworld.bll.GameBLL;
+import com.williamokano.apps.kidsworld.bll.StatisticsBLL;
 import com.williamokano.apps.kidsworld.bll.ThingBLL;
 import com.williamokano.apps.kidsworld.models.Category;
 import com.williamokano.apps.kidsworld.models.Image;
 import com.williamokano.apps.kidsworld.models.Sound;
+import com.williamokano.apps.kidsworld.models.Statistic;
 import com.williamokano.apps.kidsworld.models.Thing;
 
 import java.lang.reflect.Array;
@@ -50,10 +54,12 @@ public class QuizActivity extends Activity {
     private int currStreamId;
     private int actual = 0;
     private int selectedOption = 0;
+    private int timesWrong = 0;
+    private Category cat = null;
 
     ArrayList<Sound> ErrorsSound = new ArrayList<>();
 
-    ArrayList<Image> ActualScreenItems = null;
+    ArrayList<Thing> ActualScreenItems = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,49 +108,12 @@ public class QuizActivity extends Activity {
         Intent selfIntent = getIntent();
         int v = selfIntent.getIntExtra("Key", 0);
 
-        DBHelper dbHelper = new DBHelper(this);
+        dbHelper = new DBHelper(this);
         ThingBLL thingHelper = new ThingBLL();
 
-        Category cat = new Category(v, whichCategory(v));
+        Category cat = CategoryBLL.GetCategory(dbHelper, v);
 
         images = thingHelper.GetThings(dbHelper, cat);
-
-        /*dbHelper = new DBHelper(this);
-        db = dbHelper.getReadableDatabase();
-        String[] columns = {dbHelper.IMAGE, dbHelper.SOUND, dbHelper.OBJ_DESCRIPTION,dbHelper.CATEGORY};
-        Cursor c = db.query(dbHelper.TABLE,columns, null, null, null, null, null );
-
-
-        c.moveToFirst();
-
-        while(!c.isAfterLast()){
-            Image img = new Image();
-            img.setImageAsset(c.getInt(c.getColumnIndexOrThrow(dbHelper.IMAGE)));
-            img.setSoundAsset(new Sound(c.getInt(c.getColumnIndexOrThrow(dbHelper.SOUND))));
-            img.setDescription(c.getString(c.getColumnIndexOrThrow(dbHelper.OBJ_DESCRIPTION)));
-            img.setCategory(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)));
-
-            if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Shapes")) {
-                shapeimages.add(img);
-            }else if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Colors")){
-                colorimages.add(img);
-            }else if(c.getString(c.getColumnIndexOrThrow(dbHelper.CATEGORY)).equals("Animals")){
-                animalimages.add(img);
-            }
-            c.moveToNext();
-        }*/
-
-        /*switch(v){
-            case 1:
-                images = shapeimages;
-                break;
-            case 2:
-                images = colorimages;
-                break;
-            case 3:
-                images = animalimages;
-                break;
-        }*/
 
         Collections.shuffle(images);
 
@@ -154,7 +123,15 @@ public class QuizActivity extends Activity {
     }
 
     private void testOption() {
-        if(ActualScreenItems.get(selectedOption).getDescription().equals(quiz_top_text.getText())) {
+        if(ActualScreenItems.get(selectedOption).getImage().getDescription().equals(quiz_top_text.getText())) {
+
+            Statistic s = new Statistic();
+            s.setGame(GameBLL.ActualGame);
+            s.setThing(ActualScreenItems.get(selectedOption));
+            s.setTimesWrong(timesWrong);
+
+            StatisticsBLL.Create(dbHelper, s);
+
             if(actual + 1 < images.size()) {
                 actual++;
                 updateScreen();
@@ -164,11 +141,13 @@ public class QuizActivity extends Activity {
                 finish();
             }
         }else{
+            timesWrong++;
             this.play(null);
         }
     }
 
     private void updateScreen() {
+        timesWrong = 0;
         quiz_top_text.setText(images.get(actual).getDescription());
         play(actual + 1, 0);
 
@@ -178,18 +157,18 @@ public class QuizActivity extends Activity {
 
         Collections.shuffle(RandomList);
 
-        ArrayList<Image> ScreenItems = new ArrayList<>();
-        ScreenItems.add(actualImage);
-        ScreenItems.add(RandomList.get(0).getImage());
-        ScreenItems.add(RandomList.get(1).getImage());
-        ScreenItems.add(RandomList.get(2).getImage());
+        ArrayList<Thing> ScreenItems = new ArrayList<>();
+        ScreenItems.add(images.get(actual));
+        ScreenItems.add(RandomList.get(0));
+        ScreenItems.add(RandomList.get(1));
+        ScreenItems.add(RandomList.get(2));
 
         Collections.shuffle(ScreenItems);
 
-        quiz_body_img1.setBackgroundResource(ScreenItems.get(0).getImageAsset());
-        quiz_body_img2.setBackgroundResource(ScreenItems.get(1).getImageAsset());
-        quiz_body_img3.setBackgroundResource(ScreenItems.get(2).getImageAsset());
-        quiz_body_img4.setBackgroundResource(ScreenItems.get(3).getImageAsset());
+        quiz_body_img1.setBackgroundResource(ScreenItems.get(0).getImage().getImageAsset());
+        quiz_body_img2.setBackgroundResource(ScreenItems.get(1).getImage().getImageAsset());
+        quiz_body_img3.setBackgroundResource(ScreenItems.get(2).getImage().getImageAsset());
+        quiz_body_img4.setBackgroundResource(ScreenItems.get(3).getImage().getImageAsset());
 
         ActualScreenItems = new ArrayList<>(ScreenItems);
     }

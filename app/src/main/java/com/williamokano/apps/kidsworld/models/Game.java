@@ -35,6 +35,7 @@ public class Game {
 
     public void setCategory(Category category) {
         Category = category;
+        IdCategory = category.getIdCategoria();
     }
 
     public Integer getIdPlayer() {
@@ -51,6 +52,7 @@ public class Game {
 
     public void setPlayer(Player player) {
         Player = player;
+        IdPlayer = player.getIdPlayer();
     }
 
     public Date getDtBegin() {

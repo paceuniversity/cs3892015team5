@@ -13,6 +13,19 @@ import java.util.ArrayList;
  */
 public class CategoryBLL {
 
+    public static Category GetCategory(DBHelper helper, Integer id) {
+        helper.openDataBase();
+        Category cat = null;
+        Cursor c = helper.getMyDataBase().query("category", new String[]{"_id", "name"}, "_id = " + id.toString() + "", null, null, null, null);
+        c.moveToFirst();
+        if (!c.isAfterLast()) {
+            int internalId = c.getInt(c.getColumnIndex("_id"));
+            String name = c.getString(c.getColumnIndex("name"));
+            cat = new Category(internalId, name);
+        }
+        return cat;
+    }
+
     public static ArrayList<Category> GetCategories(DBHelper dbHelper){
 
         ArrayList<Category> categories = new ArrayList<>();

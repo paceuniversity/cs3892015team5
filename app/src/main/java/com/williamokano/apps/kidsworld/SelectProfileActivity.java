@@ -50,7 +50,7 @@ public class SelectProfileActivity extends Activity {
             public void onClick(View v) {
                 Intent createProfile = new Intent(SelectProfileActivity.this, ProfileCreateActivity.class);
                 startActivity(createProfile);
-                finish();
+                //finish();
             }
         });
 

@@ -7,6 +7,12 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.williamokano.apps.kidsworld.bll.CategoryBLL;
+import com.williamokano.apps.kidsworld.bll.GameBLL;
+import com.williamokano.apps.kidsworld.bll.PlayerBLL;
+import com.williamokano.apps.kidsworld.models.Category;
+import com.williamokano.apps.kidsworld.models.Game;
+
 import java.util.HashMap;
 
 /**
@@ -19,27 +25,40 @@ public class SelectedItems extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itembutton);
 
-        Button button1 = (Button)findViewById(R.id.train);
-        Button button2 = (Button)findViewById(R.id.quiz);
+        Button btnTraining = (Button)findViewById(R.id.train);
+        Button btnQuiz = (Button)findViewById(R.id.quiz);
+        final DBHelper helper = new DBHelper(this);
 
         Intent i = getIntent();
         k = i.getIntExtra("Key",0);
 
-        button1.setOnClickListener(new View.OnClickListener(){
+        btnTraining.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SelectedItems.this,GameMain.class);
                 intent.putExtra("Key",k);
                 startActivity(intent);
+                finish();
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener(){
+        btnQuiz.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                //Category
+                Category cat = CategoryBLL.GetCategory(helper, k);
+
+                //Create the game
+                Game g = GameBLL.Create(helper, cat, PlayerBLL.ActualPlayer);
+
+                //Set the game on the BLL
+                GameBLL.ActualGame = g;
+
                 Intent intent = new Intent(SelectedItems.this,QuizActivity.class);
                 intent.putExtra("Key",k);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -40,7 +40,7 @@ public class ThingBLL {
 
             int idThing = c.getInt(c.getColumnIndexOrThrow(dbHelper.getId()));
             int idCategory = c.getInt(c.getColumnIndexOrThrow(dbHelper.getCategory()));
-            Category category = new Category(idCategory, whichCategory(idCategory));
+            Category category = CategoryBLL.GetCategory(dbHelper, idCategory);
 
             int idImage = dbHelper.getContext().getResources().getIdentifier(c.getString(c.getColumnIndexOrThrow(dbHelper.getImage())),
                     "drawable", dbHelper.getContext().getPackageName());
