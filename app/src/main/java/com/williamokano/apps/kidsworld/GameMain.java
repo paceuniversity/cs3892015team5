@@ -75,6 +75,12 @@ public class GameMain extends Activity {
 
         cat = CategoryBLL.GetCategory(dbHelper, category_id);
 
+        images = thingHelper.GetThings(dbHelper, cat);
+
+        Collections.shuffle(images);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game_main);
+
         /**
          * Find the instance of the imageview and set the first
          * image from the array, which is the dog!

@@ -17,7 +17,7 @@ public class ButtonChoose extends Activity {
         setContentView(R.layout.activity_button);
 
         Button button1 = (Button) findViewById(R.id.button_1);
-        Button button2 = (Button) findViewById(R.id.button_2);
+        //Button button2 = (Button) findViewById(R.id.button_2);
         Button button3 = (Button) findViewById(R.id.button_3);
 
         button1.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +28,7 @@ public class ButtonChoose extends Activity {
             }
         });
 
+        /*
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +36,7 @@ public class ButtonChoose extends Activity {
                 startActivity(intent);
             }
         });
+        */
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override

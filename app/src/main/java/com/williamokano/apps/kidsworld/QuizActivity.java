@@ -125,12 +125,14 @@ public class QuizActivity extends Activity {
     private void testOption() {
         if(ActualScreenItems.get(selectedOption).getImage().getDescription().equals(quiz_top_text.getText())) {
 
-            Statistic s = new Statistic();
-            s.setGame(GameBLL.ActualGame);
-            s.setThing(ActualScreenItems.get(selectedOption));
-            s.setTimesWrong(timesWrong);
+            if(GameBLL.ActualGame != null) {
+                Statistic s = new Statistic();
+                s.setGame(GameBLL.ActualGame);
+                s.setThing(ActualScreenItems.get(selectedOption));
+                s.setTimesWrong(timesWrong);
 
-            StatisticsBLL.Create(dbHelper, s);
+                StatisticsBLL.Create(dbHelper, s);
+            }
 
             if(actual + 1 < images.size()) {
                 actual++;

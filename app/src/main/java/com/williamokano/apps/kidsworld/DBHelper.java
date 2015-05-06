@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static String DB_PATH = "/data/data/com.williamokano.apps.kidsworld/databases/";
     private SQLiteDatabase myDataBase;
 
-    public Context getContext(){
+    public Context getContext() {
         return context;
     }
 
@@ -79,10 +79,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public DBHelper(Context context) {
-
         super(context, DB_NAME, null, DB_VERSION);
-        //myDataBase = this.getWritableDatabase();
-        this.context = context;
+        try {
+            this.context = context;
+            this.createDataBase();
+            myDataBase = this.getWritableDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("DB", e.getMessage());
+        }
 
     }
 
@@ -114,16 +119,7 @@ public class DBHelper extends SQLiteOpenHelper {
             //of your application so we are gonna be able to overwrite that database with our database.
             db_Read = this.getReadableDatabase();
             db_Read.close();
-
-            try {
-
-                copyDataBase();
-
-            } catch (IOException e) {
-
-                throw new Error("Error copying database");
-
-            }
+            copyDataBase();
         }
 
     }
@@ -149,28 +145,32 @@ public class DBHelper extends SQLiteOpenHelper {
         return checkDB != null ? true : false;
     }
 
-    private void copyDataBase() throws IOException {
+    private void copyDataBase() {
 
-        //Open your local db as the input stream
-        InputStream myInput = context.getAssets().open(DB_NAME);
+        try {
+            //Open your local db as the input stream
+            InputStream myInput = context.getAssets().open(DB_NAME);
 
-        // Path to the just created empty db
-        String outFileName = DB_PATH + DB_NAME;
+            // Path to the just created empty db
+            String outFileName = DB_PATH + DB_NAME;
 
-        //Open the empty db as the output stream
-        OutputStream myOutput = new FileOutputStream(outFileName);
+            //Open the empty db as the output stream
+            OutputStream myOutput = new FileOutputStream(outFileName);
 
-        //transfer bytes from the inputfile to the outputfile
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = myInput.read(buffer)) > 0) {
-            myOutput.write(buffer, 0, length);
+            //transfer bytes from the inputfile to the outputfile
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = myInput.read(buffer)) > 0) {
+                myOutput.write(buffer, 0, length);
+            }
+
+            //Close the streams
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        //Close the streams
-        myOutput.flush();
-        myOutput.close();
-        myInput.close();
 
     }
 
